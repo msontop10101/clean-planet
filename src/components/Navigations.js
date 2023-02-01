@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ImMenu } from 'react-icons/im'
 import { AiOutlinePlusSquare } from 'react-icons/ai'
+import logo from '../assets/cpelogo.png'
 
 
 const Navigations = () => {
@@ -9,7 +10,7 @@ const Navigations = () => {
         <>
             <nav className='flex md:hidden justify-between items-center p-4 bg-[black] sticky top-0 z-10'>
                 <div><ImMenu size='2rem' color='white' onClick={() => setSidebar(true)}/></div>
-                <div><p className='text-white'>Logo</p></div>
+                <div><img src={logo} width={50} height={50} alt="logo"/></div>
             </nav>
             {
                 sidebar &&

@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLogout} from 'react-icons/md'
+import logo from './assets/cpelogo.png'
 
 const Home = () => {
 
@@ -55,6 +56,10 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='w-[100%] md:w-[70%]' style={{ backgroundColor: '#000040', height: '100vh', position: 'relative' }}>
+                    <div class='hidden md:flex justify-center py-4'>
+                        <img src={logo} width={50} height={50} alt='logo'/>
+                    </div>
+
                     <div className='chatbox absolute bottom-40'>
                         <div className='chat-log px-[20px] md:px-[40px] py-[20px]'>
                             {chatLog.map((message, index) => (

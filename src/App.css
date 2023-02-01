@@ -24,8 +24,8 @@
     color:'black'
   }
   .chatgpt {
-    color: white;
-    background-color: black;
+    color: black;
+    background-color: rgb(199, 196, 196);
     width: 80%;
     border-radius: 10px;
     padding: 10px;
