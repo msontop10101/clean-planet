@@ -31,7 +31,7 @@ const Navigations = () => {
                             <div>
                                 <li>
                                     <div class='bg-black flex items-center'>
-                                        <p class='text-xl ml-1 font-bold text-white'>logo</p>
+                                    <img src={logo} width={50} height={50} alt="logo"/>
                                     </div>
                                 </li>
                             </div>
