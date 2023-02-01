@@ -71,7 +71,7 @@ const Home = () => {
                                 onChange={(e) => setInput(e.target.value)}
                                 style={{ color: 'white', padding: '0px 10px 0px 10px', width: '90%', height: '50px', borderRadius: '10px', outline: 'none', backgroundColor: '#000040' }}
                             />
-                            <div class='cursor-pointer'><MdSend color='white' size='1.6rem' /></div>
+                            <div class='cursor-pointer'><button><MdSend color='white' size='1.6rem' /></button></div>
                         </div>
                     </form>
                 </div>
