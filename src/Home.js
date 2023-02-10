@@ -4,10 +4,13 @@ import { MdSend } from 'react-icons/md'
 import { FaPlus } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiExternalLink } from 'react-icons/fi'
-import { MdOutlineLogout} from 'react-icons/md'
+import { MdOutlineLogout } from 'react-icons/md'
 import logo from './assets/cpelogo.png'
 
 const Home = () => {
+
+    const navbarHeight = '56px'
+    const footerHeight = '82px'
 
     const [input, setInput] = useState('')
     const [chatLog, setChatLog] = useState([
@@ -25,7 +28,7 @@ const Home = () => {
         e.preventDefault();
         setChatLog((p) => [...p, { user: 'me', message: `${input}` }])
         setInput("")
-        const response = await fetch('https://ba40-197-210-76-184.eu.ngrok.io/api/chat', {
+        const response = await fetch('https://clean-planet-energy.onrender.com/', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -55,30 +58,31 @@ const Home = () => {
                         </ul>
                     </div>
                 </div>
-                <div className='w-[100%] md:w-[70%]' style={{ backgroundColor: '#000040', height: '100vh', position: 'relative' }}>
+                <div className='w-full z-30 md:w-[80%] bg-[#000040] relative flex flex-col justify-between py-4' style={{ minHeight: `calc(100vh - ${navbarHeight} - ${footerHeight})` }}>
                     <div class='hidden md:flex justify-center py-4'>
-                        <img src={logo} width={50} height={50} alt='logo'/>
+                        <img src={logo} width={50} height={50} alt='logo' />
                     </div>
+                    <div className='flex flex-col gap-10 items-center absolute bottom-10 w-full'>
+                        <div className='chat-box h-[100%] text-white w-[90%]'>
+                            <div className='chat-log justify-center overflow-y-auto' style={{maxHeight: "60vh"}}>
+                                {chatLog.map((message, index) => (
+                                    <ChatMessage key={index} message={message} />
+                                ))}
 
-                    <div className='chatbox absolute bottom-40'>
-                        <div className='chat-log px-[20px] md:px-[40px] py-[20px]'>
-                            {chatLog.map((message, index) => (
-                                <ChatMessage key={index} message={message} />
-                            ))}
-
+                            </div>
                         </div>
+                        <form onSubmit={handleSubmit} className='flex justify-center w-full items-center'>
+                            <div className='w-[80%] flex items-center' style={{ border: '2px solid gray', borderRadius: '15px' }}>
+                                <input
+                                    type='text'
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                    style={{ color: 'white', padding: '0px 10px 0px 10px', width: '90%', height: '50px', borderRadius: '10px', outline: 'none', backgroundColor: '#000040' }}
+                                />
+                                <div class='cursor-pointer'><button><MdSend color='white' size='1.6rem' /></button></div>
+                            </div>
+                        </form>
                     </div>
-                    <form onSubmit={handleSubmit} className='flex justify-center absolute bottom-10 w-full items-center'>
-                        <div className='w-[80%] flex items-center' style={{ border: '2px solid gray', borderRadius: '15px' }}>
-                            <input
-                                type='text'
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                style={{ color: 'white', padding: '0px 10px 0px 10px', width: '90%', height: '50px', borderRadius: '10px', outline: 'none', backgroundColor: '#000040' }}
-                            />
-                            <div class='cursor-pointer'><button><MdSend color='white' size='1.6rem' /></button></div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </>
@@ -87,7 +91,7 @@ const Home = () => {
 };
 const ChatMessage = ({ message }) => {
     return (
-        <div className='odd:flex justify-end'>
+        <div className={`${message.user === 'gpt' ? 'flex justify-start my-1 rounded-xl' : 'flex justify-end my-1 rounded-xl'}`}>
             <div className={`chat-message ${message.user === 'gpt' && 'chatgpt'}`}>
                 {/* <div className={`avater ${message.user === 'gpt' && 'chatgpt'}`}> */}
                 {message.user === 'gpt' && ''}

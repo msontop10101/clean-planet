@@ -14,7 +14,7 @@ const Navigations = () => {
             </nav>
             {
                 sidebar &&
-                <div class='bg-[black] w-[70%] h-[100vh] z-20 absolute top-0 p-6 flex md:hidden flex-col gap-6 justify-between'>
+                <div class='bg-[black] w-[70%] h-[100vh] z-20 fixed top-0 p-6 flex md:hidden flex-col gap-6 justify-between'>
                     <div class='flex flex-col gap-6 pb-4' style={{ borderBottom: '1px solid gray' }}>
                         <div class='flex justify-end' onClick={() => setSidebar(!sidebar)}><ImMenu size='2rem' color='white' onClick={() => setSidebar(false)}/></div>
                         <div class='text-white font-bold text-lg flex items-center justify-between'><p>Add chat</p><AiOutlinePlusSquare size='2rem'/></div>
