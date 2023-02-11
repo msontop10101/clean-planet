@@ -15,14 +15,14 @@ const Home = () => {
     const bottomRef = useRef(null);
     const [input, setInput] = useState('')
     const [chatLog, setChatLog] = useState([
-        {
-            user: 'me',
-            message: 'print out a random lorem ipsum'
-        },
-        {
-            user: 'gpt',
-            message: 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is availabl'
-        }
+        // {
+        //     user: 'me',
+        //     message: 'print out a random lorem ipsum'
+        // },
+        // {
+        //     user: 'gpt',
+        //     message: 'In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before final copy is availabl'
+        // }
 
     ])
 
@@ -54,11 +54,11 @@ const Home = () => {
             <div className='flex'>
                 <div class='w-[30%] hidden md:flex bg-[black] flex-col justify-between'>
                     <div class='p-2'>
-                        <div class='p-3 border-2 rounded-md border-[#919191] flex items-center gap-5 cursor-pointer text-white'><FaPlus /><p>New chat</p></div>
+                        <div class='p-3 border-2 rounded-md border-[#919191] flex items-center gap-5 cursor-pointer text-white'><FaPlus onClick={() => setChatLog([ ])}/><p>New chat</p></div>
                     </div>
                     <div class='px-2 py-6' style={{ borderTop: '2px solid #919191' }}>
                         <ul class='flex flex-col gap-8 chat text-white'>
-                            <li class='flex items-center gap-2'><RiDeleteBin6Line size='1.5em' /><p>Clear conversation</p></li>
+                            <li class='flex items-center gap-2'><RiDeleteBin6Line size='1.5em' onClick={() => setChatLog([ ])} /><p>Clear conversation</p></li>
                             <li class='flex items-center gap-2'><FiExternalLink size='1.5em' /><p>FAQ</p></li>
                             <li class='flex items-center gap-2'><MdOutlineLogout size='1.5em' /><p>logo</p></li>
                         </ul>
