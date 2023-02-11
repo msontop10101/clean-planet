@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css'
 import { MdSend } from 'react-icons/md'
 import { FaPlus } from 'react-icons/fa'
@@ -12,6 +12,7 @@ const Home = () => {
     const navbarHeight = '56px'
     const footerHeight = '82px'
 
+    const bottomRef = useRef(null);
     const [input, setInput] = useState('')
     const [chatLog, setChatLog] = useState([
         {
@@ -24,6 +25,11 @@ const Home = () => {
         }
 
     ])
+
+    useEffect(() => {
+        // 👇️ scroll to bottom every time messages change
+        bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+      }, [chatLog]);
     async function handleSubmit(e) {
         e.preventDefault();
         setChatLog((p) => [...p, { user: 'me', message: `${input}` }])
@@ -64,12 +70,14 @@ const Home = () => {
                     </div>
                     <div className='flex flex-col gap-10 items-center absolute bottom-10 w-full'>
                         <div className='chat-box h-[100%] text-white w-[90%]'>
-                            <div className='chat-log justify-center overflow-y-auto' style={{maxHeight: "60vh"}}>
+                            <div className='chat-log justify-center relative' style={{maxHeight: "60vh"}}>
+                                <div className='h-full overflow-y-scroll'>
                                 {chatLog.map((message, index) => (
                                     <ChatMessage key={index} message={message} />
                                 ))}
-
+                                <div ref={bottomRef} />
                             </div>
+                                </div>
                         </div>
                         <form onSubmit={handleSubmit} className='flex justify-center w-full items-center'>
                             <div className='w-[80%] flex items-center' style={{ border: '2px solid gray', borderRadius: '15px' }}>
