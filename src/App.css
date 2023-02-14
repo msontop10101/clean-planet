@@ -28,3 +28,12 @@
   .message {
     overflow-wrap: anywhere;
   }
+
+.lh {
+  height: calc(100vh - 52px);
+}
+@media screen and (max-width:760px) {
+  .lh {
+    height: calc(100vh - 82px - 56px)
+  }
+}

@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLogout } from 'react-icons/md'
+import { ThreeDots } from 'react-loader-spinner'
 import logo from './assets/cpelogo.png'
 
 const Home = () => {
@@ -26,27 +27,35 @@ const Home = () => {
 
     ])
 
-    useEffect(() => {
-        // 👇️ scroll to bottom every time messages change
-        bottomRef.current?.scrollIntoView({behavior: 'smooth'});
-      }, [chatLog]);
+    const [loading, setLoading] = useState(false)
     async function handleSubmit(e) {
         e.preventDefault();
-        setChatLog((p) => [...p, { user: 'me', message: `${input}` }])
+        let chatLogNew = [...chatLog, { user: 'me', message: `${input}` }]
+        const message = input;
+
         setInput("")
+        setChatLog(chatLogNew)
+        setLoading(true)
+        // const messages = chatLogNew.map((message) => message.message).join('')
         const response = await fetch('https://clean-planet-energy.onrender.com/', {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                message: chatLog.map((message) => message.message).join("")
+                message, //: messages
             })
         });
-        const data = await response.json()
-        setChatLog(p => [...p, { user: "gpt", message: `${data.data.message}` }])
-        console.log(data.data)
+        const data = await response.json();
+        setChatLog([...chatLogNew, { user: 'gpt', message: `${data.message}` }])
+        setLoading(false)
+        console.log(data.message)
     }
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [chatLog]);
+
 
     return (
         <>
@@ -54,28 +63,38 @@ const Home = () => {
             <div className='flex'>
                 <div class='w-[30%] hidden md:flex bg-[black] flex-col justify-between'>
                     <div class='p-2'>
-                        <div class='p-3 border-2 rounded-md border-[#919191] flex items-center gap-5 cursor-pointer text-white'><FaPlus onClick={() => setChatLog([ ])}/><p>New chat</p></div>
+                        <div class='p-3 border-2 rounded-md border-[#919191] flex items-center gap-5 cursor-pointer text-white' onClick={() => {setChatLog([ ]); setLoading(false)}}><FaPlus/><p>New chat</p></div>
                     </div>
                     <div class='px-2 py-6' style={{ borderTop: '2px solid #919191' }}>
                         <ul class='flex flex-col gap-8 chat text-white'>
-                            <li class='flex items-center gap-2'><RiDeleteBin6Line size='1.5em' onClick={() => setChatLog([ ])} /><p>Clear conversation</p></li>
+                            <li class='flex items-center gap-2 cursor-pointer' onClick={() => {setChatLog([ ]); setLoading(false)}}><RiDeleteBin6Line size='1.5em'  /><p>Clear conversation</p></li>
                             <li class='flex items-center gap-2'><FiExternalLink size='1.5em' /><p>FAQ</p></li>
                             <li class='flex items-center gap-2'><MdOutlineLogout size='1.5em' /><p>logo</p></li>
                         </ul>
                     </div>
                 </div>
-                <div className='w-full z-30 md:w-[80%] bg-[#000040] relative flex flex-col justify-between py-4' style={{ minHeight: `calc(100vh - ${navbarHeight} - ${footerHeight})` }}>
+                <div className='w-full z-30 md:w-[80%] bg-[#000040] relative flex flex-col justify-between py-4 lh' style={{ minHeight: `calc(100vh - ${navbarHeight} - ${footerHeight})` }}>
                     <div class='hidden md:flex justify-center py-4'>
                         <img src={logo} width={50} height={50} alt='logo' />
                     </div>
                     <div className='flex flex-col gap-10 items-center absolute bottom-10 w-full'>
                         <div className='chat-box h-[100%] text-white w-[90%]'>
                             <div className='chat-log justify-center relative' style={{maxHeight: "60vh"}}>
-                                <div className='h-full overflow-y-scroll'>
+                                <div className='h-full overflow-y-auto'>
                                 {chatLog.map((message, index) => (
                                     <ChatMessage key={index} message={message} />
                                 ))}
                                 <div ref={bottomRef} />
+                                {loading && <div><ThreeDots
+                                        height="20"
+                                        width="80"
+                                        radius="9"
+                                        color="white"
+                                        ariaLabel="three-dots-loading"
+                                        wrapperStyle={{}}
+                                        wrapperClassName=""
+                                        visible={true}
+                                    /></div>}
                             </div>
                                 </div>
                         </div>
