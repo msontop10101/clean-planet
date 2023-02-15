@@ -5,8 +5,12 @@ import { FaPlus } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiExternalLink } from 'react-icons/fi'
 import { MdOutlineLogout } from 'react-icons/md'
+import { ImMenu } from 'react-icons/im'
+import { AiOutlinePlusSquare } from 'react-icons/ai'
 import { ThreeDots } from 'react-loader-spinner'
 import logo from './assets/cpelogo.png'
+
+
 
 const Home = () => {
 
@@ -15,6 +19,7 @@ const Home = () => {
 
     const bottomRef = useRef(null);
     const [input, setInput] = useState('')
+    const [sidebar, setSidebar] = useState(false)
     const [chatLog, setChatLog] = useState([
         // {
         //     user: 'me',
@@ -37,7 +42,7 @@ const Home = () => {
         setChatLog(chatLogNew)
         setLoading(true)
         // const messages = chatLogNew.map((message) => message.message).join('')
-        const response = await fetch('https://clean-planet-energy.onrender.com/', {
+        const response = await fetch('https://0832-197-210-55-65.eu.ngrok.io/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,9 +62,72 @@ const Home = () => {
     }, [chatLog]);
 
 
+
+
     return (
         <>
+            {/* ///-----Navigation  */}
+            <nav className='flex md:hidden justify-between items-center p-4 bg-[black] sticky top-0 z-10'>
+                <div><ImMenu size='2rem' color='white' onClick={() => setSidebar(true)}/></div>
+                <div><img src={logo} width={50} height={50} alt="logo"/></div>
+            </nav>
+            {/* ///--Navigation */}
+
+
+            {
+                sidebar &&
+                <div class='bg-[black] w-[70%] h-[100vh] z-50 fixed top-0 p-6 flex md:hidden flex-col gap-6 justify-between'>
+                    <div class='flex flex-col gap-6 pb-4' style={{ borderBottom: '1px solid gray' }}>
+                        <div class='flex justify-end' onClick={() => setSidebar(!sidebar)}><ImMenu size='2rem' color='white' onClick={() => setSidebar(false)}/></div>
+                        <div class='text-white font-bold text-lg flex items-center justify-between'><p>New chat</p><AiOutlinePlusSquare size='2rem' onClick={(() => setChatLog([ ]))}/></div>
+                        <div>
+                            <p class='text-white font-bold text-lg'>Chats:</p>
+                        </div>
+                    </div>
+                    <div class='flex flex-col gap-10 pt-4' style={{ borderTop: '1px solid gray' }}>
+                        
+                        <div class='flex justify-between'>
+                            <li>
+                                <div>logout</div>
+                            </li>
+                            <div>
+                                <li>
+                                    <div class='bg-black flex items-center'>
+                                    <img src={logo} width={50} height={50} alt="logo"/>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
             {/* {!isAuth ? <Navigate to={'/login'} /> : null} */}
+            {sidebar && <div class='bg-[black] w-[70%] h-[100vh] z-50 fixed top-0 p-6 flex md:hidden flex-col gap-6 justify-between'>
+                    <div class='flex flex-col gap-6 pb-4' style={{ borderBottom: '1px solid gray' }}>
+                        <div class='flex justify-end' onClick={() => setSidebar(!sidebar)}><ImMenu size='2rem' color='white' onClick={() => setSidebar(false)}/></div>
+                        <div class='text-white font-bold text-lg flex items-center justify-between'><p>New chat</p><AiOutlinePlusSquare size='2rem' onClick={() => {setChatLog([ ]); setLoading(false)}}/></div>
+                        <div>
+                            <p class='text-white font-bold text-lg'>Chats:</p>
+                        </div>
+                    </div>
+                    <div class='flex flex-col gap-10 pt-4' style={{ borderTop: '1px solid gray' }}>
+                        
+                        <div class='flex justify-between'>
+                            <li>
+                                <div>logout</div>
+                            </li>
+                            <div>
+                                <li>
+                                    <div class='bg-black flex items-center'>
+                                    <img src={logo} width={50} height={50} alt="logo"/>
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                </div>}
             <div className='flex'>
                 <div class='w-[30%] hidden md:flex bg-[black] flex-col justify-between'>
                     <div class='p-2'>
