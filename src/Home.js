@@ -42,7 +42,7 @@ const Home = () => {
         setChatLog(chatLogNew)
         setLoading(true)
         // const messages = chatLogNew.map((message) => message.message).join('')
-        const response = await fetch('https://0832-197-210-55-65.eu.ngrok.io/', {
+        const response = await fetch('https://clean-planet-energy.onrender.com/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -52,9 +52,9 @@ const Home = () => {
             })
         });
         const data = await response.json();
-        setChatLog([...chatLogNew, { user: 'gpt', message: `${data.message}` }])
+        setChatLog([...chatLogNew, { user: 'gpt', message: `${data.data.message}` }])
         setLoading(false)
-        console.log(data.message)
+        console.log(data.data.message)
     }
 
     useEffect(() => {
@@ -137,7 +137,7 @@ const Home = () => {
                         <ul class='flex flex-col gap-8 chat text-white'>
                             <li class='flex items-center gap-2 cursor-pointer' onClick={() => {setChatLog([ ]); setLoading(false)}}><RiDeleteBin6Line size='1.5em'  /><p>Clear conversation</p></li>
                             <li class='flex items-center gap-2'><FiExternalLink size='1.5em' /><p>FAQ</p></li>
-                            <li class='flex items-center gap-2'><MdOutlineLogout size='1.5em' /><p>logo</p></li>
+                            {/* <li class='flex items-center gap-2'><MdOutlineLogout size='1.5em' /><p>logo</p></li> */}
                         </ul>
                     </div>
                 </div>
